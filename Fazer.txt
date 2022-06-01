@@ -1,0 +1,37 @@
+O agente sempre inicia a jornada no condado (etapa 1 no mapa).
+• O agente sempre termina a sua jornada na batalha com o Imperador de(etapa i
+no mapa).
+
+O agente obrigatoriamente deve utilizar um algoritmo de busca para encontrar
+o melhor caminho e planejar as etapas.
+
+O programa deve exibir o custo do caminho percorrido pelo agente enquanto
+ele se movimenta pelo mapa e também o custo final ao terminar a execução.
+
+
+Neste trabalho existem dois problemas distintos:
+1. Encontrar o melhor caminho para cruzar a terra média;
+2. Encontrar a melhor combinação de personagens para as etapas.
+
+
+etapa 1 -> etapa da fase -> etapa i
+
+todas as combinacoes de 4 de melhor ao pior
+todas as combinacoes de 3 de melhor ao pior
+todas as combinacoes de 2 de melhor ao pior
+todos os tempos com 1 de melhor ao pior
+
+juntar todas ordenar e ir removendo conforme os personagens forem perdendo vida
+
+31 - 4 personagens poderao ser usados 7x e dps sobra os 3
+
+
+Array de personagens, maximo da combinacao, lista com o preco das combinacoes
+
+
+O array ta repetindo os nomes corrigir isso
+
+FALTA:
+-Mostrar o mapa
+-Calcular os precos das distancias
+-Mostrar os melhores personagens
