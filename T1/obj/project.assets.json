@@ -4587,19 +4587,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\carolina.brandao\\.nuget\\packages\\": {}
+    "C:\\Users\\Carol\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\CarolinaBrandao\\source\\repos\\T1\\T1\\T1.csproj",
+      "projectUniqueName": "C:\\Users\\Carol\\Source\\Repos\\INF1771\\T1\\T1.csproj",
       "projectName": "T1",
-      "projectPath": "C:\\Users\\CarolinaBrandao\\source\\repos\\T1\\T1\\T1.csproj",
-      "packagesPath": "C:\\Users\\carolina.brandao\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\CarolinaBrandao\\source\\repos\\T1\\T1\\obj\\",
+      "projectPath": "C:\\Users\\Carol\\Source\\Repos\\INF1771\\T1\\T1.csproj",
+      "packagesPath": "C:\\Users\\Carol\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Carol\\Source\\Repos\\INF1771\\T1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\carolina.brandao\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Carol\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4607,8 +4607,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {},
-        "https://pkgs.dev.azure.com/transferoswiss/Transfero/_packaging/TransferoFeed/nuget/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
@@ -4650,7 +4649,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.105\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

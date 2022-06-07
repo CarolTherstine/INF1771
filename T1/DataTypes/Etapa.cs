@@ -4,6 +4,7 @@ namespace T1_AA.DataTypes
 {
     public class Etapa : Enumeration
     {
+        public static readonly Etapa Etapa0 = new Etapa(0, 0, '0');
         public static readonly Etapa Etapa1 = new Etapa(1,10,'1'); 
         public static readonly Etapa Etapa2 = new Etapa(2,20,'2'); 
         public static readonly Etapa Etapa3 = new Etapa(3,30,'3'); 
