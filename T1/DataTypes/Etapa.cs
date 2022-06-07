@@ -40,7 +40,7 @@ namespace T1_AA.DataTypes
         public char identificador { get; set; }
         public int id { get; set; }
         public Etapa() { }
-        public Etapa(int _id, int dif, char representacao) : base(_id, representacao.ToString())
+        public Etapa(int _id, int dif, char representacao)
         {
             dificuldade = dif;
             identificador = representacao;

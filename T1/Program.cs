@@ -6,38 +6,17 @@ using T1.Helpers;
 using T1_AA.DataTypes;
 const int x = 82;
 List<string> mapa = new List<string>();
-montaMapa();
 var Characthers = Enumeration.GetAll<Characther>().ToList();
 var Terrenos = Enumeration.GetAll<TipoTerreno>();
 var Etapas = Enumeration.GetAll<Etapa>().ToList();
-Etapas.Remove(Etapa.Etapa0);
-var resultados = new List<float>();
-List<Tile> tilesDosCaminhos = new List<Tile>();
-//montaCaminho('0', '1');
-//escolheMelhorPersonagens();
-/*foreach (var etapa in Etapas)
+var index = 0;
+for (var i = 0; i < Etapas.Count; i++)
 {
-	var custo = 0.0f;
-	var dif = etapa.dificuldade;
-	var totalAgilidade = 0.0f;
-	/*foreach (var personagem in Characthers)
-    {
-		if (personagem.energia > 0)
-        {
-			personagem.DiminuiEnergia(1);
-			totalAgilidade += personagem.agility;
-        }
-		custo = dif / totalAgilidade;
-    }*/
-//Inicio da jornada sempre comeca no 1
-/*
-	Console.WriteLine("xinXILAS GORDINHAS E FOFAS");
-	Console.WriteLine(etapa.identificador);
-	tilesDosCaminhos.Add(montaCaminho('0', etapa.identificador));
-	//Jornada sempre termina no i
-	montaCaminho(etapa.identificador, 'I');
-}*/
-Console.WriteLine("Sexo");
+	montaMapa();
+	index++;
+	Console.WriteLine($"Inicial: {Etapas[i].identificador}, Final: {Etapas[index].identificador}");
+	montaCaminho(Etapas[i].identificador, Etapas[index].identificador, mapa);
+}
 SimulatedAnnealing();
 
 
@@ -56,29 +35,27 @@ void montaMapa()
     }
 }
 
-void mostraMapa(Tile atual)
+void mostraMapa(Tile atual, List<string> mapa)
 {
+	var tempMapa = new List<string>();
+	tempMapa = mapa;
 	var tile = atual;
 	var tempo = 0;
-//	Console.WriteLine("Retracing steps backwards...");
 	while (true)
 	{
 		Console.WriteLine($"{tile.X} : {tile.Y}");
-		//			if (mapa[tile.Y][tile.X] == ' ')
-		//		{
 		tempo += PegaCusto(tile.X, tile.Y);
-		var newMapRow = mapa[tile.Y].ToCharArray();
+		var newMapRow = tempMapa[tile.Y].ToCharArray();
 		newMapRow[tile.X] = '*';
-		mapa[tile.Y] = new string(newMapRow);
-		//	}
+		tempMapa[tile.Y] = new string(newMapRow);
 		tile = tile.Parent;
 		if (tile == null)
 		{
 			Console.WriteLine("Mapa final:");
-			mapa.ForEach(x => Console.WriteLine(x));
+			tempMapa.ForEach(x => Console.WriteLine(x));
 			Console.WriteLine("Done!");
 			Console.WriteLine($"Custo total de tempo foi : {tempo}");
-			return;
+			break;
 		}
 	}
 }
@@ -93,16 +70,14 @@ int PegaCusto(int x,int y)
     }
 	return 0;
 }
-Tile montaCaminho(char inicial, char final)
+void montaCaminho(char inicial, char final, List<string> mapa)
 {
 	var inicio = new Tile();
 	inicio.Y = mapa.FindIndex(x => x.Contains(inicial));
 	inicio.X = mapa[inicio.Y].IndexOf(inicial);
-	//inicio.Cost = Terrenos.Where(c => c.letraRepresentante.Equals(mapa[mapa[inicio.Y].IndexOf(inicial)][mapa.FindIndex(x => x.Contains(inicial))])).FirstOrDefault().tempo;
 	var fim = new Tile();
 	fim.Y = mapa.FindIndex(x => x.Contains(final));
 	fim.X = mapa[fim.Y].IndexOf(final);
-	//fim.Cost = Terrenos.Where(c => c.letraRepresentante.Equals(mapa[mapa[mapa[fim.Y].IndexOf(final)][mapa.FindIndex(x => x.Contains(final))])).FirstOrDefault().tempo;
 
 	inicio.SetDistance(fim.X, fim.Y);
 	var naoVisitados = new List<Tile>();
@@ -110,10 +85,10 @@ Tile montaCaminho(char inicial, char final)
 	var visitados = new List<Tile>();
 	while (naoVisitados.Any())
 	{
-		var atual = naoVisitados.OrderBy(x => x.CostDistance).First();
+		var atual = naoVisitados.OrderBy(x => x.Cost).First();
 		if (atual.X == fim.X && atual.Y == fim.Y)
 		{
-			return atual;
+			mostraMapa(atual, mapa);
 		}
 		visitados.Add(atual);
 		naoVisitados.Remove(atual);
@@ -125,7 +100,7 @@ Tile montaCaminho(char inicial, char final)
 			if (naoVisitados.Any(x => x.X == atualAndavel.X && x.Y == atualAndavel.Y))
 			{
 				var existingTile = naoVisitados.First(x => x.X == atualAndavel.X && x.Y == atualAndavel.Y);
-				if (existingTile.CostDistance > atual.CostDistance)
+				if (existingTile.Cost > atual.Cost)
 				{
 					naoVisitados.Remove(existingTile);
 					naoVisitados.Add(atualAndavel);
@@ -137,8 +112,6 @@ Tile montaCaminho(char inicial, char final)
 			}
 		}
 	}
-	Console.WriteLine("Erro, sem caminho");
-	return null;
 }
 List<Tile> MostraPossiveisTiles(List<string> mapa, Tile atual, Tile proximo)
 {
@@ -187,20 +160,20 @@ void SimulatedAnnealing()
 	Console.WriteLine($"O TEMPO FINAL 1 FOI {tempoFinal}");
 }
 
-
+#region etapa_de_iniciacao
 Characther SorteiaTime(Etapa etapa, List<Characther> personagens, List<Characther> time)
 {
 	var rand = new Random();
 	var iteration = 0;
-	var personagem = rand.Next(0, 6);
+	var personagem = rand.Next(0, 7);
 	while (personagens[personagem].energia == 0 || time.Contains(personagens[personagem]))
     {
-		personagem = rand.Next(0, 6);
+		personagem = rand.Next(0, 7);
 		iteration++;
-		if (iteration > 16)
-        {
+		if (iteration > 28)
+		{
 			break;
-        }
+		}
 		
     }
 	return personagens[personagem];
@@ -211,22 +184,32 @@ List<KeyValuePair<Etapa, List<Characther>>> Inicia()
 	List<KeyValuePair<Etapa, List<Characther>>> ordenacaoFinal = new List<KeyValuePair<Etapa, List<Characther>>>();
 	List<Characther> personagens = Enumeration.GetAll<Characther>().ToList();
 	foreach (var etapa in Etapas)
-    {
+	{
 		List<Characther> personagensSortidos = new List<Characther>();
-		for (var i = 0; i < 2; i++)
-        {
-			var sorteio = SorteiaTime(etapa, personagens, personagensSortidos);
-			if (sorteio.energia > 0)
-            {
-				sorteio.DiminuiEnergia(1);
-				personagensSortidos.Add(sorteio);
-            }
-			
-        }
+		if (etapa.id <= 8)
+		{
+
+			personagensSortidos.Add(personagens[2]);
+			personagens[2].DiminuiEnergia(1);
+		}
+		else
+		{
+			for (var i = 0; i < 2; i++)
+			{
+				var sorteio = SorteiaTime(etapa, personagens, personagensSortidos);
+				if (sorteio.energia > 0)
+				{
+					sorteio.DiminuiEnergia(1);
+					personagensSortidos.Add(sorteio);
+				}
+
+			}
+		}
 		ordenacaoFinal.Add(new KeyValuePair<Etapa,List<Characther>>(etapa, personagensSortidos));
     }
 	return ordenacaoFinal;
 }
+#endregion
 List<KeyValuePair<Etapa, List<Characther>>> InverteUmPersonagem(List<KeyValuePair<Etapa, List<Characther>>> personagens)
 {
 	for (var i =0; i <300; i++) 
@@ -241,7 +224,7 @@ List<KeyValuePair<Etapa, List<Characther>>> InverteUmPersonagem(List<KeyValuePai
 		var personagemTirar1 = personagens[indice1].Value[indice3];
 		var troca2 = personagens[indice2];
 		var personagemTirar2 = personagens[indice2].Value[indice3];
-		if (!troca2.Value.Contains(personagemTirar1) && !troca1.Value.Contains(personagemTirar2))
+		if ((personagemTirar1 != null && !troca2.Value.Contains(personagemTirar1)) && (personagemTirar2!= null && !troca1.Value.Contains(personagemTirar2)))
 		{
 			List<Characther> aux = new List<Characther>();
 			foreach (var personagen1 in troca1.Value)
